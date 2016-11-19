@@ -1,0 +1,134 @@
+﻿@using AlbumsPhotosGallery.Models
+@model AlbumsViewModel
+@{
+    ViewBag.Title = "List of albums";
+}
+
+
+
+@*<div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Albums</h1>
+        </div>
+        @foreach (var item in Model.Albums)
+        {
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <h3>@item.Name</h3>
+                <a class="thumbnail" href="@Url.Action("Index", "Photos", new { id = item.ID })">
+                    <img class="img-responsive" src="@Url.Action("GetThumbnailPath", "Album", new { album = item })" alt="@item.Name">
+                </a>
+            </div>
+        }
+
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a class="thumbnail">
+                @*<img class="img-responsive" src="http://placehold.it/400x300" alt="">
+
+            </a>
+
+            <button type="button" class="modal-link btn btn-success">New Album</button>
+        </div>
+
+
+    </div>*@
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog" role="document" style="left:0px">
+        <div class="modal-content">
+            <div id="myModalContent"></div>
+        </div>
+    </div>
+
+</div>
+<section id="page-title">
+    <div class="container clearfix">
+        <h1>Albums</h1>
+    </div>
+</section>
+<section id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+            <div id="portfolio" class="portfolio grid-container portfolio-3 clearfix">
+                @foreach (var item in Model.Albums)
+                {
+                    <article class="portfolio-item pf-media pf-icons">
+                        <div class="portfolio-image">
+                            <a href="portfolio-single.html">
+                                <img src="@Url.Action("GetThumbnailPath", "Album", new { albumId = item.ID })" alt="Open Imagination">
+                            </a>
+                            <div class="portfolio-overlay">
+                                <a href="@Url.Action("Index", "Photos", new { id = item.ID })" class="center-icon"><i class="icon-line-plus"></i></a>
+                            </div>
+                        </div>
+                        <div class="portfolio-desc">
+                            <h3><a href="@Url.Action("Index", "Photos", new { id = item.ID })">@item.Name</a></h3>
+                        </div>
+                    </article>
+                }
+                <button type="button" class="modal-link btn btn-success">New Album</button>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $element = $('body');
+
+            $element.on('click', '.modal-link', function () {
+                debugger;
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: "Modal/ViewAddAlbum",
+                    contentType: "application/json; charset=utf-8",
+                    data: {},
+                    datatype: "json",
+                    success: function (data) {
+                        debugger;
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function (er) {
+                        console.log("Dynamic content load failed: " + er);
+                    }
+                });
+            });
+
+            $element.on('click', "#closbtn", function () {
+                $('#myModal').modal('hide');
+            });
+
+            $element.on('hidden.bs.modal', "#myModal", function () {
+                $(this).removeData('bs.modal');
+                window.location.reload(true);
+            });//Nu stiu de ce dar asta nu merge
+
+            $element.on('click', "#approve-btn", function () {
+                $('#myModal').modal('hide');
+
+                var data = new FormData();
+
+                data.append("name", $("#nameTextForm").val());
+
+                data.append("userid", $("#userIdTextForm").val());
+
+                $.ajax({
+                    url: 'SaveAlbum', type: "POST", processData: false,
+                    data: data, dataType: 'json',
+                    contentType: false,
+                    success: function (response) {
+                        if (response != null || response != '')
+                            console.log(response);
+                    },
+                    error: function (er) {
+                        console.log("Save album failed: " + er);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+
+}

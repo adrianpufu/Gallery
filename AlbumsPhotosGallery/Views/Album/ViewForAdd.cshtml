@@ -1,0 +1,40 @@
+﻿@model AlbumsPhotosGallery.Models.Album
+
+
+
+<h2>View</h2>
+<form action="" method="post" enctype="multipart/form-data">
+    <label>Upload File:</label>
+    <h2>Name:</h2>
+    <input type="text" id="nameTextForm" name="name" />
+    <h2>Userid:</h2>
+    <input type="text" id="descriptionTextForm" name="description" />
+    <input type="submit" id="submitbtn" />
+</form>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script>
+    $(document).ready(function () {
+        $("#submitbtn").click(function () {
+            var data = new FormData();
+            data.append("name", $("#nameTextForm").val());
+            data.append("description", $("#descriptionTextForm").val());
+            $.ajax({
+                url: 'SaveImage', type: "POST", processData: false,
+                data: data, dataType: 'json',
+                contentType: false,
+                success: function (response) {
+                    if (response != null || response != '')
+                        alert(response);
+                },
+                error: function (er) { }
+
+            });
+            return false;
+        });
+
+    });
+</script>
+}

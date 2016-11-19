@@ -26,6 +26,21 @@ namespace AlbumsPhotosGallery
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jQuery.FileUpload").IncludeDirectory(
+                "~/Scripts/jQuery.FileUpload", "*.js", false));
+
+            bundles.Add(new ScriptBundle("~/bundles/jQuery.FileUpload/cors").IncludeDirectory(
+                "~/Scripts/jQuery.FileUpload/cors", "*.js", false));
+
+            bundles.Add(new StyleBundle("~/Content/jQuery.FileUpload/css").IncludeDirectory(
+                "~/Content/jQuery.FileUpload/css", "*.css", true));
+
+            bundles.Add(new StyleBundle("~/Content/Theme.Style").IncludeDirectory(
+                "~/Content/Theme.Style", "*.css", true));
+
+            bundles.Add(new ScriptBundle("~/bundles/Theme.Scripts").IncludeDirectory(
+                "~/Scripts/Theme.Scripts", "*.js", false));
         }
     }
 }

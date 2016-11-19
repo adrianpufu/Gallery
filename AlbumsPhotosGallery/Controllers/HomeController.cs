@@ -26,5 +26,9 @@ namespace AlbumsPhotosGallery.Controllers
 
             return View();
         }
+        public ActionResult ViewForAdd()
+        {
+            return View();
+        }
     }
 }

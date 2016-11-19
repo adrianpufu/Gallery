@@ -1,0 +1,213 @@
+﻿@using AlbumsPhotosGallery.Models
+@model PhotosViewModel
+
+@{
+    ViewBag.Title = "List of photos";
+}
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="left:0px">
+        <div class="modal-content">
+            <div id="myModalContent"></div>
+        </div>
+    </div>
+</div>
+<section id="page-title">
+    <div class="container clearfix">
+        <h1>Photos for album @Model.Album.Name</h1>
+    </div>
+</section>
+<section id="content">
+    <div class="content-wrap">
+        <div class="container clearfix">
+            <div id="portfolio" class="portfolio grid-container portfolio-3 clearfix">
+                @foreach (var item in Model.Photos)
+                {
+                    <article class="portfolio-item pf-media pf-icons">
+                        <div class="portfolio-image">
+                            <a href="portfolio-single.html">
+                                <img src="@Url.Action("GetPhoto", "Photos", new { photoid = item.ID, phototype = PhotoTypeEnum.Thumbnail })" alt="Open Imagination">
+                            </a>
+                            <div class="portfolio-overlay">
+                                <a href="@Url.Action("GetPhoto", "Photos", new { photoid = item.ID, phototype = PhotoTypeEnum.Medium })" class="center-icon" data-lightbox="image"><i class="icon-line-plus"></i></a>
+                            </div>
+                        </div>
+                    </article>
+                }
+                <button type="button" class="modal-link btn btn-success">Add Photos</button>
+            </div>
+        </div>
+    </div>
+</section>
+<script id="template-upload" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        </td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+            <button class="btn btn-primary start" disabled>
+                <i class="glyphicon glyphicon-upload"></i>
+                <span>Start</span>
+            </button>
+            {% } %}
+            {% if (!i) { %}
+            <button class="btn btn-warning cancel">
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                <span>Cancel</span>
+            </button>
+            {% } %}
+        </td>
+    </tr>
+    {% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+    {% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                {% if (file.url) { %}
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                {% } else { %}
+                <span>{%=file.name%}</span>
+                {% } %}
+            </p>
+            {% if (file.error) { %}
+            <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            {% if (file.deleteUrl) { %}
+            <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}" {% if (file.deletewithcredentials) { %} data-xhr-fields='{"withCredentials":true}' {% } %}>
+                <i class="glyphicon glyphicon-trash"></i>
+                <span>Delete</span>
+            </button>
+            <input type="checkbox" name="delete" value="1" class="toggle">
+            {% } else { %}
+            <button class="btn btn-warning cancel">
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                <span>Cancel</span>
+            </button>
+            {% } %}
+        </td>
+    </tr>
+    {% } %}
+</script>
+@section scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $element = $('body');
+
+            $element.on('click', '.modal-link', function () {
+                debugger;
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: "/Modal/ViewAddPhotos",
+                    contentType: "application/json; charset=utf-8",
+                    data: {},
+                    datatype: "json",
+                    success: function (data) {
+                        debugger;
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function (er) {
+                        console.log("Dynamic content load failed: " + er);
+                    }
+                });
+            });
+
+            $element.on('click', "#closbtn", function () {
+                $('#myModal').modal('hide');
+            });
+
+            $element.on('hidden.bs.modal', "#myModal", function () {
+                $(this).removeData('bs.modal');
+                window.location.reload(true);
+            });//Nu stiu de ce dar asta nu merge
+        });
+
+        //jquery upload file
+
+        //multiple actiuni
+        //$.blueimp.fileupload.prototype.processActions.duplicateImage = function (data, options) {
+        //    if (data.canvas) {
+        //        data.files.push(data.files[data.index]);
+        //    }
+        //    return data;
+        //};
+
+        $('#fileupload').fileupload({
+            url: 'SaveImage',
+            done: function (e, data) {
+                // "data.result" will contain the response data
+            },
+            //processQueue: [
+            //    {
+            //        action: 'loadImage',
+            //        fileTypes: /^image\/(gif|jpeg|png)$/,
+            //        maxFileSize: 20000000 // 20MB
+            //    },
+            //    {
+            //        action: 'resizeImage',
+            //        maxWidth: 1920,
+            //        maxHeight: 1200
+            //    },
+            //    { action: 'saveImage' },
+            //    { action: 'duplicateImage' },
+            //    {
+            //        action: 'resizeImage',
+            //        maxWidth: 1280,
+            //        maxHeight: 1024
+            //    },
+            //    { action: 'saveImage' },
+            //    { action: 'duplicateImage' },
+            //    {
+            //        action: 'resizeImage',
+            //        maxWidth: 1024,
+            //        maxHeight: 768
+            //    },
+            //    { action: 'saveImage' }
+            //]
+        });
+
+       
+        
+
+    </script>
+
+@*<script>
+    var $form = null;
+    $(function () {
+
+        $form = $('#fileupload').fileupload({
+            dataType: 'json'
+        });
+
+    });
+    $('#fileupload').addClass('fileupload-processing');
+
+</script>*@
+}

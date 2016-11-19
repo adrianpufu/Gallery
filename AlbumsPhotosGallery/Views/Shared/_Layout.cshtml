@@ -3,40 +3,61 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - AlbumsPhotos</title>
     @Styles.Render("~/Content/css")
+    @* Style fileupload *@
+    @Styles.Render("~/Content/jQuery.FileUpload/css")
+    @Styles.Render("~/Content/Theme.Style")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div id="wrapper" class="clearfix">
+        <header id="header" class="full-header">
+            <div id="header-wrap">
+                <div class="container clearfix">
+                    <div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+                    <div id="logo">
+                        <a href="@Url.Action("Index", "Album")" class="standard-logo" data-dark-logo="images/logo-dark.png"><img src="~/images/logo.png" alt="Canvas Logo"></a>
+                        <a href="@Url.Action("Index", "Album")" class="retina-logo" data-dark-logo="images/logo-dark@2x.png"><img src="~/images/logo@2x.png" alt="Canvas Logo"></a>
+                    </div>
+                    <nav id="primary-menu">
+                        <ul>
+                            <li>
+                                <a href="@Url.Action("Index", "Album")">
+                                    <div>Albums</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index", "Album")">
+                                    <div>Features</div>
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="top-search">
+                            <a href="#" id="top-search-trigger"><i class="icon-search3"></i><i class="icon-line-cross"></i></a>
+                            <form action="search.html" method="get">
+                                <input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter..">
+                            </form>
+                        </div>
+                    </nav>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
+        </header>
+        <div class="body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - AlbumsPhotos</p>
+            </footer>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+
+    @* Scripts fileupload *@
+    @Scripts.Render("~/bundles/jQuery.FileUpload/cors")
+    @Scripts.Render("~/bundles/jQuery.FileUpload")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/Theme.Scripts")
 </body>
 </html>
