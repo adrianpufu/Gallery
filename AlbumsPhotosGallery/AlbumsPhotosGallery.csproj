@@ -169,6 +169,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Album.cs" />
+    <Compile Include="Models\AlbumPartialViewModel.cs" />
     <Compile Include="Models\AlbumsViewModel.cs" />
     <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\PhotosViewModel.cs" />
@@ -276,6 +277,8 @@
     <Content Include="images\logo-dark%402x.png" />
     <Content Include="images\logo-dark.png" />
     <Content Include="images\logo.png" />
+    <Content Include="images\preloader%402x.gif" />
+    <Content Include="images\preloader.gif" />
     <Content Include="images\Thumbnails\defaultThumbnail.png" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
@@ -292,14 +295,11 @@
     <Content Include="Scripts\jquery-2.2.4.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
-    <Content Include="Scripts\jQuery.FileUpload\5tmpl.js" />
-    <Content Include="Scripts\jQuery.FileUpload\canvas-to-blob.js" />
+    <Content Include="Scripts\jQuery.FileUpload\0tmpl.js" />
+    <Content Include="Scripts\jQuery.FileUpload\01canvas-to-blob.js" />
     <Content Include="Scripts\jQuery.FileUpload\1load-image.all.js" />
     <Content Include="Scripts\jQuery.FileUpload\cors\jquery.postmessage-transport.js" />
     <Content Include="Scripts\jQuery.FileUpload\cors\jquery.xdr-transport.js" />
-    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-angular.js" />
-    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-audio.js" />
-    <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-image.js" />
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-jquery-ui.js" />
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-process.js" />
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-ui.js" />
@@ -317,7 +317,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\Theme.Scripts\canvas.slider.fade.js" />
     <Content Include="Scripts\Theme.Scripts\events-data.js" />
     <Content Include="Scripts\Theme.Scripts\functions.js" />
     <Content Include="Scripts\Theme.Scripts\jquery-migrate.min.js" />

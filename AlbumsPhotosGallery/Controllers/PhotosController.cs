@@ -97,9 +97,14 @@ namespace AlbumsPhotosGallery.Controllers
             return base.File(photoVersion.Path, "image/jpeg");
         }
 
-        public ActionResult ViewAddPhotos()
+        public ActionResult ViewAddPhotos(int albumID)
         {
-            return PartialView("_AddPhotos");
+            var model = new AlbumPartialViewModel
+            {
+                albumId = albumID
+            };
+
+            return PartialView("_AddPhotos", model);
         }
 
         [HttpPost]
@@ -148,7 +153,7 @@ namespace AlbumsPhotosGallery.Controllers
             using (MagickImage image = new MagickImage(file.FileName)) //Nu stiu exact daca merge asa direct din HttpPostedFileBase
             {
                 MagickImageInfo info = new MagickImageInfo(file.FileName);
-                
+
                 //fit in dimensiunile respective
                 //MagickGeometry size = new MagickGeometry(100, 100);
 

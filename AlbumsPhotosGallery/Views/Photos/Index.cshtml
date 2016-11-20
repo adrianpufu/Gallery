@@ -119,16 +119,16 @@
             var $element = $('body');
 
             $element.on('click', '.modal-link', function () {
-                debugger;
+                var albumID = @Model.Album.ID;
+
                 var options = { "backdrop": "static", keyboard: true };
                 $.ajax({
                     type: "GET",
                     url: "/Modal/ViewAddPhotos",
                     contentType: "application/json; charset=utf-8",
-                    data: {},
+                    data: {albumID},
                     datatype: "json",
                     success: function (data) {
-                        debugger;
                         $('#myModalContent').html(data);
                         $('#myModal').modal(options);
                         $('#myModal').modal('show');
@@ -193,8 +193,8 @@
             //]
         });
 
-       
-        
+
+
 
     </script>
 

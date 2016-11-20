@@ -44,10 +44,17 @@ namespace AlbumsPhotosGallery
             );
 
             routes.MapRoute(
+                name: "SaveImage",
+                url: "Photos/Index/SaveImage",
+                defaults: new { controller = "Photos", action = "SaveImage" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }
