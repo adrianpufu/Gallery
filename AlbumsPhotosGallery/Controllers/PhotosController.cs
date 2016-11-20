@@ -122,11 +122,13 @@ namespace AlbumsPhotosGallery.Controllers
 
                         var name = Path.GetFileNameWithoutExtension(files[i].FileName);
 
-                        var photoThumbnail = ResizeImage(files[i], 400, 300, PhotoTypeEnum.Thumbnail);
+                        var fileName = Path.GetFileName(path);
+                        
+                        var photoThumbnail = ResizeImage(path, 400, 300, PhotoTypeEnum.Thumbnail);
 
-                        var photoMedium = ResizeImage(files[i], 1000, 800, PhotoTypeEnum.Medium);
+                        var photoMedium = ResizeImage(path, 800, 1000, PhotoTypeEnum.Medium);
 
-                        MagickImageInfo info = new MagickImageInfo(files[i].FileName);
+                        MagickImageInfo info = new MagickImageInfo(path);
 
                         var photoOriginal = CreatePhotoVersion(path, PhotoTypeEnum.Original, info.Width, info.Height);
 
@@ -142,34 +144,32 @@ namespace AlbumsPhotosGallery.Controllers
             }
             catch (Exception ex) { return Json("Error While Saving. " + ex.Message); }
 
-            return Json(new
-            {
-                Success = true
-            });
+            return Index(albumId);
+
         }
 
-        private PhotoVersion ResizeImage(HttpPostedFileBase file, int typeWidth, int typeHeight, PhotoTypeEnum type)
+        private PhotoVersion ResizeImage(string fileName, int typeWidth, int typeHeight, PhotoTypeEnum type)
         {
-            using (MagickImage image = new MagickImage(file.FileName)) //Nu stiu exact daca merge asa direct din HttpPostedFileBase
+            using (MagickImage image = new MagickImage(fileName)) //Nu stiu exact daca merge asa direct din HttpPostedFileBase
             {
-                MagickImageInfo info = new MagickImageInfo(file.FileName);
+                MagickImageInfo info = new MagickImageInfo(fileName);
 
                 //fit in dimensiunile respective
-                //MagickGeometry size = new MagickGeometry(100, 100);
+                MagickGeometry size = new MagickGeometry(typeWidth, typeHeight);
 
                 if (info.Width > info.Height)
                 {
-                    image.Resize(0, typeHeight);
+                    //image.Resize(0, typeHeight);
 
-                    //image.Resize(size);
+                    image.Resize(size);
                 }
                 else
                 {
-                    image.Resize(typeWidth, 0);
+                    //image.Resize(typeWidth, 0);
 
-                    //image.Resize(size);
+                    image.Resize(size);
                 }
-                return saveImageToDisk(image, type, file.FileName);
+                return saveImageToDisk(image, type, fileName);
             }
         }
 
