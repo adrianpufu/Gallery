@@ -287,11 +287,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Content\Theme.Style\colors-rtl.php" />
     <Content Include="Content\Theme.Style\colors.php" />
-    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.1.1.js" />
-    <Content Include="Scripts\jquery-3.1.1.min.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <None Include="Scripts\jquery-2.2.4.intellisense.js" />
+    <Content Include="Scripts\jquery-2.2.4.js" />
+    <Content Include="Scripts\jquery-2.2.4.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jQuery.FileUpload\5tmpl.js" />
@@ -309,6 +307,7 @@
     <Content Include="Scripts\jQuery.FileUpload\jquery.fileupload-video.js" />
     <Content Include="Scripts\jQuery.FileUpload\4jquery.fileupload.js" />
     <Content Include="Scripts\jQuery.FileUpload\3jquery.iframe-transport.js" />
+    <Content Include="Scripts\jquery-2.2.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jQuery.FileUpload\2jquery.ui.widget.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -323,10 +322,8 @@
     <Content Include="Scripts\Theme.Scripts\functions.js" />
     <Content Include="Scripts\Theme.Scripts\jquery-migrate.min.js" />
     <Content Include="Scripts\Theme.Scripts\jquery.calendario.js" />
-    <Content Include="Scripts\Theme.Scripts\jquery.camera.js" />
     <Content Include="Scripts\Theme.Scripts\jquery.elastic.js" />
     <Content Include="Scripts\Theme.Scripts\jquery.gmap.js" />
-    <Content Include="Scripts\Theme.Scripts\jquery.js" />
     <Content Include="Scripts\Theme.Scripts\jquery.mousewheel.min.js" />
     <Content Include="Scripts\Theme.Scripts\jquery.nivo.js" />
     <Content Include="Scripts\Theme.Scripts\jquery.vmap.js" />
@@ -371,8 +368,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

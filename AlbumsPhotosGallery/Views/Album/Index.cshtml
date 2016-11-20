@@ -4,33 +4,6 @@
     ViewBag.Title = "List of albums";
 }
 
-
-
-@*<div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Albums</h1>
-        </div>
-        @foreach (var item in Model.Albums)
-        {
-            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <h3>@item.Name</h3>
-                <a class="thumbnail" href="@Url.Action("Index", "Photos", new { id = item.ID })">
-                    <img class="img-responsive" src="@Url.Action("GetThumbnailPath", "Album", new { album = item })" alt="@item.Name">
-                </a>
-            </div>
-        }
-
-        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-            <a class="thumbnail">
-                @*<img class="img-responsive" src="http://placehold.it/400x300" alt="">
-
-            </a>
-
-            <button type="button" class="modal-link btn btn-success">New Album</button>
-        </div>
-
-
-    </div>*@
 <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
     <div class="modal-dialog" role="document" style="left:0px">
@@ -67,6 +40,15 @@
                 }
                 <button type="button" class="modal-link btn btn-success">New Album</button>
             </div>
+            <ul class="pagination">
+                <li><a href="@Url.Action("Index","Album", new { PageSize = Model.PageSize, PageNumber = Model.PageNumber-1 })">&laquo;</a></li>
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li><a href="@Url.Action("Index","Album", new { PageSize = Model.PageSize, PageNumber = i })">@i</a></li>
+
+                }
+                <li><a href="@Url.Action("Index","Album", new { PageSize = Model.PageSize, PageNumber = Model.PageNumber+1 })">&raquo;</a></li>
+            </ul>
         </div>
     </div>
 </section>
@@ -105,7 +87,7 @@
                 window.location.reload(true);
             });//Nu stiu de ce dar asta nu merge
 
-            $element.on('click', "#approve-btn", function () {
+            $element.on('click', "#save-album", function () {
                 $('#myModal').modal('hide');
 
                 var data = new FormData();
@@ -115,7 +97,7 @@
                 data.append("userid", $("#userIdTextForm").val());
 
                 $.ajax({
-                    url: 'SaveAlbum', type: "POST", processData: false,
+                    url: 'Save/SaveAlbum', type: "POST", processData: false,
                     data: data, dataType: 'json',
                     contentType: false,
                     success: function (response) {

@@ -14,6 +14,18 @@ namespace AlbumsPhotosGallery
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "SaveAlbum",
+                url: "Save/SaveAlbum",
+                defaults: new { controller = "Album", action = "SaveAlbum" }
+            );
+
+            routes.MapRoute(
+                name: "SaveAlbum2",
+                url: "{controller}/Save/SaveAlbum",
+                defaults: new { controller = "Album", action = "SaveAlbum" }
+            );
+
+            routes.MapRoute(
                 name: "ModalAlbums",
                 url: "Modal/ViewAddAlbum",
                 defaults: new { controller = "Album", action = "ViewAddAlbum" }

@@ -10,5 +10,11 @@ namespace AlbumsPhotosGallery.Models
         public ICollection<Photo> Photos { get; set; }
 
         public Album Album { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int TotalPages { get; set; }
+
+        public int PageNumber { get; set; }
     }
 }
